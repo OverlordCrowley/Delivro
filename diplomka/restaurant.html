@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--========================= КОЛОНКИ =========================-->
+        <link rel="stylesheet" href="https://unpkg.com/flexboxgrid2@7.2.1/flexboxgrid2.min.css">
+        
+        <!--=============== BOXICONS ===============-->
+        <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
+        
+        <!--========================= ОСНОВНОЙ CSS =========================-->
+        <link rel="stylesheet" href="client/src/assets/style.css">
+
+        <title>Delivro</title>
+    </head>
+
+    <body>
+        <!--========================= ШАПКА =========================-->
+        <header class="header">
+            <div class="container">
+                <div class="header_body">
+                    <div class="header_logo">
+                        <a href="index.html" clas6s="logo">
+                            <span class="USER">Delivri</span>
+                            <span class="EATS">EATS</span>
+                        </a>
+                    </div>
+
+                    <div class="header_items">
+                        <div class="header_login">
+                            <button class="login_button" id="myBtn_registration">Регистрация <i class='bx bx-user-plus bx-sx'></i></button>
+                            <button class="login_button" id="myBtn_login">Авторизация <i class='bx bxs-user-check bx-sx'></i></button>
+                        </div>
+
+                        <!--Модальное окно регистрации-->
+                        <div id="myModal_registration" class="modal registration">
+                            <div class="modal-content">
+                                <div class="modal-header registration">
+                                    <span class="close_registration">&times;</span>
+                                    <h2>Регистрация</h2>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form>
+                                        <input type="email" placeholder="E-mail" required>
+                                        <input type="tel" placeholder="Телефон" required>
+                                        <input type="text" placeholder="Логин" required>
+                                        <input type="password" placeholder="Пароль" required>
+                                        <input type="password" placeholder="Повторите пароль" required>
+                                        <button>Зарегистрироваться</button>
+                                    </form>
+                                </div>
+                                
+                                <div class="modal-footer registration">
+                                    <span>Есть аккаунт?</span> <a href="javascript:login();">Авторизация</a><i class='bx bx-right-arrow-alt'></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Модальное окно авторизации-->
+                        <div id="myModal_login" class="modal login">
+                            <div class="modal-content">
+                                <div class="modal-header login">
+                                    <span class="close_login">&times;</span>
+                                    <h2>Авторизация</h2>
+                                </div>
+
+                                <div class="modal-body">
+                                    <form>
+                                        <input type="text" placeholder="Логин" required>
+                                        <input type="password" placeholder="Пароль" required>
+                                        <button>Войти</button>
+                                    </form>
+                                </div>
+                                
+                                <div class="modal-footer login">
+                                    <span>Нет аккаунта?</span> <a href="javascript:registration();">Регистрация</a><i class='bx bx-right-arrow-alt'></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="header_basket" id="myBtn_card">
+                            <i class='bx bxs-shopping-bag bx-sm'></i>
+                        </div>
+
+                        <!--Модальное окно корзины-->
+                        <!-- <div id="myModal_card" class="modal card">
+                            <div class="modal-content card">
+                                <div class="modal-header card">
+                                    <span class="close_card">&times;</span>
+                                    <h2>Ваши товары</h2>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="products">
+                                        <img src="assets/img/hotter/french_omelette.png" alt="Французский омлет">
+                                        <h5>Французский омлет</h5>
+        
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-footer card">
+                                   
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--========================= ПОЛЕ ПОИСКА =========================-->
+        <div class="search">
+            <div class="container">
+                <form class="form_search">
+                    <input type="search" placeholder="Поиск по ресторанам и кухням">
+                </form>
+            </div>
+        </div>
+
+
+        <!--========================= РЕАСТОРАНЫ В МОСКВЕ =========================-->
+        <main>
+            <div class="container">
+                <h2 class="main_title">Предложения в г. Астана</h2>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/mcdonalds.png" class="card_img" alt="McDonald’s">
+                                
+                                <div class="card_top">
+                                    <p>ИП ""</p>
+                                    <p class="card_text">₸₸ • Торты</p>
+                                    <p class="card_time">25 - 35 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/dimsum.png" class="card_img" alt="DimSum & Co">
+                                
+                                <div class="card_top">
+                                    <p>ИП ""</p>
+                                    <p class="card_text">₸₸ • Японская • Китайская • Азиатская</p>
+                                    <p class="card_time">40 - 50 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/engine.png" class="card_img" alt="ДвижОК">
+                                
+                                <div class="card_top">
+                                    <p>ИП ""</p>
+                                    <p class="card_text">₸₸ • Американская • Европейская</p>
+                                    <p class="card_time">35 - 45 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/nya.png" class="card_img" alt="НЯ">
+                                
+                                <div class="card_top">
+                                    <p>ИП ""</p>
+                                    <p class="card_text">₸₸ • Вьетнамская</p>
+                                    <p class="card_time">30 - 40 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/dzy_point.png" class="card_img" alt="Точка Дзы">
+                                
+                                <div class="card_top">
+                                    <p>Точка Дзы — Цветной</p>
+                                    <p class="card_text">₸₸ • Вьетнамская</p>
+                                    <p class="card_time">40 - 50 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/cinnabon.png" class="card_img" alt="Cinnabon">
+                                
+                                <div class="card_top">
+                                    <p>Cinnabon</p>
+                                    <p class="card_text">₸ • Выпечка • Десерты • Капкейки</p>
+                                    <p class="card_time">25 - 35 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/pizzelove.png" class="card_img" alt="PIZZELOVE">
+                                
+                                <div class="card_top">
+                                    <p>PIZZELOVE</p>
+                                    <p class="card_text">₸₸ • Пицца</p>
+                                    <p class="card_time">15 - 25 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/zy_cafe.png" class="card_img" alt="Zю кафе">
+                                
+                                <div class="card_top">
+                                    <p>Zю кафе — Тверская</p>
+                                    <p class="card_text">₸₸ • Японская</p>
+                                    <p class="card_time">25 - 35 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12">
+                        <a href="#">
+                            <div class="card_restaurants">
+                                <img src="client/src/assets/img/bar_bq_cafe.png" class="card_img" alt="Bar BQ Cafe">
+                                
+                                <div class="card_top">
+                                    <p>Bar BQ Cafe — Манежная</p>
+                                    <p class="card_text">₸₸₸ • Европейская</p>
+                                    <p class="card_time">30 - 40 мин</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!--========================= ПОДВАЛ =========================-->
+        <footer class="footer">
+            <div class="container">
+                <a href="#">
+                    <button> class="button_up">
+                        <img src="client/src/assets/img/arrow.svg">
+                    </button>
+                </a>
+    
+                <div class="footer_logo">
+                    <a href="index.html" class="logo">
+                        <span class="USER">Delivro</span>
+                        <span class="EATS">Delivro</span>
+                    </a>
+                </div>
+                <hr class="line">
+
+                <div class="links">
+                    <div class="col-lg-4 col-md-4 col-xs-7">
+                        <div class="language">
+                            <img src="client/src/assets/img/location.svg" class="shape">
+                            <select class="lang">
+                                <option value="ru">Русский</option>
+                                <option value="en">нет</option>
+                                <option value="fr">Французский</option>
+                                <option value="deu">Немецкий</option>
+                            </select>
+                        </div>
+
+                        <div class="hash">
+                            <span class="hash_tag">#</span>Delivro
+                        </div>
+
+                        <div class="social">
+                            <a href="https://vk.com" target="_blank">
+                                <img src="client/src/assets/img/vk.svg" alt="vk">
+                            </a>
+                            <a href="https://github.com" target="_blank">
+                                <img src="client/src/assets/img/github.svg" alt="github">
+                            </a>
+                            <a href="https://web.telegram.org" target="_blank">
+                                <img src="client/src/assets/img/telegram.svg" alt="telegram">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <div class="center_content">
+                            <p><a href="#">Об UserEats</a></p>
+                            <p><a href="#">Станьте партнёром по доставке</a></p>
+                            <p><a href="#">Станьте парнёром-рестораном</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-3 col-xs-12">
+                        <div class="right_content">
+                            <p><a href="restaurant_in_Moscow.html">Все города</a></p>
+                            <p><a href="#">Цены</a></p>
+                            <p><a href="#">Помощь</a></p>
+                            <p><a href="#">FAQs</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="line">
+
+                <div class="download">
+                    <a href="https://apple.com" target="_blank">
+                        <img src="client/src/assets/img/app_store.svg" alt="App Store">
+                    </a>
+                    <a href="https://play.google.com" target="_blank">
+                        <img src="client/src/assets/img/google_play.svg" alt="Google Play">
+                    </a>
+                </div>
+                
+                <hr class="line">
+
+                <div class="privacy">
+                    <p><a href="#">© 2017 User Technologies Inc</a></p>
+                    <p><a href="#">Обработка персональных данных</a></p>
+                    <p><a href="#">Пользовательское соглашение</a></p>
+                </div>
+            </div>
+        </footer>
+
+        <!--========================= jQuery =========================-->
+        <script type="text/javascript" src="client/src/assets/jquery.min.js"></script>
+
+        <!--========================= ОСНОВНОЙ JS =========================-->
+        <script type="text/javascript" src="client/src/assets/script.js"></script>
+        <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
+    </body>
+</html>
