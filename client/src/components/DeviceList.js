@@ -8,6 +8,7 @@ import DeviceItem from "./DeviceItem";
 const DeviceList = observer((props) => {
     const {restaurant} = useContext(Context)
 
+
     return (
         <Row className="d-flex">
             <main>

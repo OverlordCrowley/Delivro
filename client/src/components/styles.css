@@ -360,6 +360,8 @@ headerMap:focus::after
     margin: 0;
 }
 
+
+
 /*Смартфон*/
 @media screen and (max-width: 768px) {
     .nav_menu { padding: 20px 0 30px 0 }

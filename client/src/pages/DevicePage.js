@@ -1,9 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {useParams} from 'react-router-dom'
-import {fetchRestaurantAllTypesById, fetchRestaurantTypesById} from "../http/deviceAPI";
+import {
+    createBasketCard,
+    fetchBasketCards,
+    fetchRestaurantAllTypesById,
+    fetchRestaurantTypesById
+} from "../http/deviceAPI";
 import {fetchOneRestaurant} from "../http/restaurantAPI";
 import {Context} from "../index";
+import jwt_decode from "jwt-decode";
 
 const DevicePage = () => {
     const [restaurant, setRestaurant] = useState([]);
@@ -82,16 +88,21 @@ const DevicePage = () => {
                                <>
                                    <h2 className="main_title">{selectedType ? selectedType.name : ''}</h2>
                                    <div className="row">
-                                       <div className="col-lg-6 col-md-12 col-xs-12" onClick={(e)=>{
-                                            if(user.isAuth){
-                                                alert('Товар добавлен в корзину')
-                                            }
-                                            else{
-                                                alert('Необходимо авторизоваться')
-                                            }
+                                       <div className="col-lg-6 col-md-12 col-xs-12" >
+                                           <div className="card_main" id="myBtn_1"
+                                                onClick={(e)=>{
+                                                    if(user.isAuth){
+                                                        createBasketCard({'userId': jwt_decode(localStorage.getItem('token')).id, 'deviceId': el.id})
+                                                            .then((basketCard) => {
+                                                            })
 
-                                       }}>
-                                           <div className="card_main" id="myBtn_1">
+                                                    }
+                                                    else{
+                                                        alert('Необходимо авторизоваться')
+                                                    }
+
+                                                }}
+                                           >
                                                <div className="left_card">
                                                    <p id='card_main' className="card_title">{el.name}</p>
                                                    <p className="card_description">

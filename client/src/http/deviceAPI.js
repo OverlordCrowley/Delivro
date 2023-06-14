@@ -49,3 +49,20 @@ export const fetchRestaurantAllTypesById = async (id) => {
 }
 
 
+export const createBasketCard = async ({userId, deviceId}) => {
+
+    try{
+        const {data} = await $authHost.post('api/basket', {userId, deviceId})
+        return data
+    }
+    catch (e){
+        alert("Товар уже был добавлен в корзину ранее")
+    }
+}
+
+export const fetchBasketCards = async (userId) => {
+    const {data} = await $host.get('api/basket', userId)
+    return data
+}
+
+

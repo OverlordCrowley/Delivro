@@ -2,16 +2,19 @@ import React, {useContext, useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom"
 import './styles.css';
 import {DEVICE_ROUTE} from "../utils/consts";
-import {fetchRestaurant, fetchRestaurantTypes, fetchRestaurantTypesById} from "../http/deviceAPI";
+import {fetchBasketCards, fetchRestaurant, fetchRestaurantTypes, fetchRestaurantTypesById} from "../http/deviceAPI";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
+import jwt_decode from "jwt-decode";
 
 const DeviceItem = observer(({cafe}) => {
     const history = useHistory();
     const {restaurant} = useContext(Context)
     useEffect(() => {
         fetchRestaurantTypes().then(data => restaurant.setRestaurantTypes(data))
+        fetchBasketCards(jwt_decode(localStorage.getItem('token')).id).then()
     }, [])
+
     return (
         <button className="restaurantItem" onClick={() => history.push(DEVICE_ROUTE + "/" + cafe.id)}>
             <div >

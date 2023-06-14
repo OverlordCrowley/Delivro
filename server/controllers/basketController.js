@@ -1,20 +1,24 @@
 const uuid = require('uuid')
 const path = require('path');
-const {Device, DeviceInfo} = require('../models/models')
+const {Basket, BasketDevice} = require('../models/models')
 const ApiError = require('../error/ApiError');
 
-class DeviceController {
+class BasketController {
     async create(req, res, next) {
         try {
-            let {name, composition, weight, price, discount_price, restaurantId, foodTypeId} = req.body
-            const {img} = req.files
-            let fileName = uuid.v4() + ".jpg"
-            img.mv(path.resolve(__dirname, '..', 'static', fileName))
+            let {userId, deviceId} = req.body
+            const basket = await Basket.findOne({ where: {'userId': userId}});
+            const basketDevices = await BasketDevice.findOne({ where: {'basketId': basket.id, 'deviceId': deviceId}});
 
+            if(basketDevices){
+                const basketDevice = await BasketDevice.update({'basketId': basket.id, 'deviceId': deviceId}, {'count': 1});
+                return res.json(basketDevice)
+            }
+            else{
+                const basketDevice = await BasketDevice.create({'basketId': basket.id, 'deviceId': deviceId, 'count': 1});
+                return res.json(basketDevice)
+            }
 
-            const device = await Device.create({name, composition,  price, weight, discount_price, restaurantId, foodTypeId, img: fileName});
-
-            return res.json(device)
         } catch (e) {
             next(ApiError.badRequest(e.message))
         }
@@ -23,16 +27,16 @@ class DeviceController {
     async getAll(req, res) {
 
         let { userId } = req.query;
-        let id = userId || 1;
-        let devices;
-        if (restaurant) {
-            devices = await Device.findAll({ where: { restaurantId: id } });
+        let basket, basketDevice;
+        if (userId) {
+            basket = await Basket.findOne({ where: { userId: userId } });
+            basketDevice = await BasketDevice.findAll({ where: { basketId: basket.id } });
         }
 
-        return res.json(devices || []);
+        return res.json(basketDevice || []);
 
     }
 
 }
 
-module.exports = new DeviceController()
+module.exports = new BasketController()
