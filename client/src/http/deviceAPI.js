@@ -60,9 +60,9 @@ export const createBasketCard = async ({userId, deviceId}) => {
     }
 }
 
-export const fetchBasketCards = async (userId) => {
-    const {data} = await $host.get('api/basket', userId)
-    return data
+export const fetchBasketCards = async ({userId}) => {
+        const {data} = await $host.post('api/basket/user', {userId})
+        return data
 }
 
 

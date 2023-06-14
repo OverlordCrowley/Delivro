@@ -26,12 +26,13 @@ class BasketController {
 
     async getAll(req, res) {
 
-        let { userId } = req.query;
+        let { userId } = req.body;
         let basket, basketDevice;
-        if (userId) {
-            basket = await Basket.findOne({ where: { userId: userId } });
-            basketDevice = await BasketDevice.findAll({ where: { basketId: basket.id } });
-        }
+        basket = await Basket.findOne({ where: { 'userId': userId } });
+        console.log(basket)
+        basketDevice = await BasketDevice.findAll({ where: { 'basketId': basket.id } });
+
+
 
         return res.json(basketDevice || []);
 

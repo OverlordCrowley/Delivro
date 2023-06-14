@@ -3,7 +3,6 @@ import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {useParams} from 'react-router-dom'
 import {
     createBasketCard,
-    fetchBasketCards,
     fetchRestaurantAllTypesById,
     fetchRestaurantTypesById
 } from "../http/deviceAPI";

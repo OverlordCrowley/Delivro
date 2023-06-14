@@ -4,12 +4,15 @@ import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 import {fetchBasketCards, fetchRestaurant, fetchTypes} from "../http/deviceAPI";
 import jwt_decode from "jwt-decode";
+import BasketCard from "../components/basketCard/BasketCard";
 
 const Basket = observer(() => {
     const {restaurant} = useContext(Context)
+    const {user} = useContext(Context)
     let [cards, setCard] = useState([]);
+    console.log(jwt_decode(localStorage.getItem('token')).id)
     useEffect(() => {
-        fetchBasketCards(jwt_decode(localStorage.getItem('token')).id).then(data => {
+        fetchBasketCards({'userId': jwt_decode(localStorage.getItem('token')).id}).then(data => {
             setCard(data)
             console.log(data)
         })
@@ -20,8 +23,7 @@ const Basket = observer(() => {
             <nav className="nav_menu" id="nav_menu">
                 <div className="container">
                     <div className="row col-lg-8 col-md-12 col-xs-0 main_menu">
-
-                        {cards.length > 0 ?
+                        {cards && cards.length > 0 ?
                         <>
                             <table>
                                 <thead>
@@ -34,7 +36,9 @@ const Basket = observer(() => {
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                {cards.map(el=>(
+                                    <BasketCard/>
+                                ))}
                                 </tbody>
                             </table>
                             <button className={"headerMap green"} onClick={(e)=>{
