@@ -27,7 +27,7 @@ class EmailController {
 
 
 
-        return(mail);
+        return(mail || []);
 
 
 

@@ -65,4 +65,9 @@ export const fetchBasketCards = async ({userId}) => {
         return data
 }
 
+export const deleteBasketCards = async ({userId, deviceId}) => {
+    const {data} = await $host.delete('api/basket/', {userId, deviceId})
+    return data
+}
+
 

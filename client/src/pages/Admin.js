@@ -32,7 +32,7 @@ const Admin = () => {
                 className="mt-4 p-2"
                 onClick={() => setDeviceVisible(true)}
             >
-                Добавить устройство
+                Добавить блюдо
             </Button>
             <Button
                 variant={"outline-dark"}
@@ -41,6 +41,7 @@ const Admin = () => {
             >
                 Добавить тип ресторана
             </Button>
+
 
             <CreateRestaurant show={restaurantVisible} onHide={() => setRestaurantVisible(false)}/>
             <CreateDevice show={deviceVisible} onHide={() => setDeviceVisible(false)}/>

@@ -5,6 +5,8 @@ export default class DeviceStore {
         this._types = []
         this._restaurant = []
         this._restaurantTypes = []
+        this._basket = []
+        this._total = 0
         this._devices = []
         this._selectedType = {}
         this._selectedFoodType = {}
@@ -22,8 +24,15 @@ export default class DeviceStore {
         this._devices = devices
     }
 
+    setTotal(total) {
+        this._total = Number(total)
+    }
+
     setRestaurantTypes(types) {
         this._restaurantTypes = types
+    }
+    setBasket(basket) {
+        this._basket = basket
     }
 
     get restaurantTypes() {
@@ -36,7 +45,11 @@ export default class DeviceStore {
     get restaurant() {
         return this._restaurant
     }
-
-
+    get basket() {
+        return this._basket
+    }
+    get total() {
+        return this._total
+    }
 
 }
