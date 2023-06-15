@@ -8,9 +8,6 @@ class EmailController {
         let {email, message} = req.body
         const mail = await Email.create({'email': email, 'message': message});
 
-
-        let testEmailAccount = await nodemailer.createTestAccount();
-
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -30,7 +27,7 @@ class EmailController {
 
 
 
-        return(result);
+        return(mail);
 
 
 

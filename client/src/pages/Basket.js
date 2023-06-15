@@ -10,12 +10,17 @@ const Basket = observer(() => {
     const {restaurant} = useContext(Context)
     const {user} = useContext(Context)
     let [cards, setCard] = useState([]);
-    console.log(jwt_decode(localStorage.getItem('token')).id)
+    let [totalPrice, setTotalPrice] = useState(0);
     useEffect(() => {
         fetchBasketCards({'userId': jwt_decode(localStorage.getItem('token')).id}).then(data => {
             setCard(data)
+
             console.log(data)
+
         })
+            .catch((error)=>{
+                console.log(error)
+            })
     }, [])
 
     return (
@@ -37,7 +42,7 @@ const Basket = observer(() => {
                                 </thead>
                                 <tbody>
                                 {cards.map(el=>(
-                                    <BasketCard/>
+                                    <BasketCard device={el}/>
                                 ))}
                                 </tbody>
                             </table>

@@ -50,6 +50,11 @@ const Email = sequelize.define('email', {
     message: { type: DataTypes.TEXT, allowNull: false },
 });
 
+const Order = sequelize.define('order', {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    email: { type: DataTypes.STRING, unique: true, allowNull: false },
+    message: { type: DataTypes.TEXT, allowNull: false },
+});
 
 // Определение связей после определения всех моделей
 User.hasOne(Basket);
@@ -79,4 +84,5 @@ module.exports = {
     RestaurantType,
     Email,
     FoodType,
+    Order,
 };

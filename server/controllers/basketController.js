@@ -1,6 +1,6 @@
 const uuid = require('uuid')
 const path = require('path');
-const {Basket, BasketDevice} = require('../models/models')
+const {Basket, BasketDevice, Device} = require('../models/models')
 const ApiError = require('../error/ApiError');
 
 class BasketController {
@@ -24,20 +24,45 @@ class BasketController {
         }
     }
 
-    async getAll(req, res) {
+    async getAll(req, res, next) {
 
         let { userId } = req.body;
-        let basket, basketDevice;
-        basket = await Basket.findOne({ where: { 'userId': userId } });
-        console.log(basket)
-        basketDevice = await BasketDevice.findAll({ where: { 'basketId': basket.id } });
+        try {
+            const basket = await Basket.findByPk(userId, {
+                include: {
+                    model: BasketDevice,
+                    include: Device,
+                },
+            });
+            if (!basket) {
+                return 'Корзина не найдена';
+            }
 
 
+            const basketContents = basket.basket_devices.map((basketDevice) => {
+                const { id, count, device } = basketDevice;
+                const { name, composition, price, weight, discount_price, img } = device;
+                return {
+                    id,
+                    count,
+                    device: {
+                        name,
+                        composition,
+                        price,
+                        weight,
+                        discount_price,
+                        img,
+                    },
+                };
+            });
 
-        return res.json(basketDevice || []);
+            return res.json(basketContents || [])
+
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
 
     }
-
 }
 
 module.exports = new BasketController()
