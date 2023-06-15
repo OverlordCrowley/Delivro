@@ -13,7 +13,7 @@ const Basket = observer(() => {
     const [totalPrice, setTotalPrice] = useState(0);
 
     const updateTotalPrice = (price) => {
-        setTotalPrice((prevTotal) => prevTotal + price);
+        setTotalPrice((prevTotal) => prevTotal + Number(price));
     };
 
     useEffect(() => {
@@ -21,9 +21,9 @@ const Basket = observer(() => {
             setCard(data);
             const total = data.reduce((sum, el) => {
                 if (el.discount_price > el.price) {
-                    return sum + el.discount_price * el.count;
+                    return sum + el.device.discount_price * el.count;
                 } else {
-                    return sum + el.price * el.count;
+                    return sum + el.device.price * el.count;
                 }
             }, 0);
             setTotalPrice(total);

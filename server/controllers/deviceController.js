@@ -12,7 +12,6 @@ class DeviceController {
             let fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
 
-
             const device = await Device.create({name, composition,  price, weight, discount_price, restaurantId, foodTypeId, img: fileName});
 
             return res.json(device)

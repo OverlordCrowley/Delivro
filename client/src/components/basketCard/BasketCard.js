@@ -10,24 +10,28 @@ const BasketCard = ({ count, device, updateTotalPrice }) => {
     const [discountPrice, setDiscountPrice] = useState(0);
     const [total, setTotal] = useState(0);
 
-    useEffect(() => {
-        setCurrentCount(count);
-    }, [count]);
+
 
     useEffect(() => {
         setName(device.name);
         setPrice(device.price);
         setImg(device.img);
         setDiscountPrice(device.discount_price);
+
+        if(discountPrice < price){
+            setTotal(discountPrice * count)
+        }
+        else {
+            setTotal(price * count)
+        }
     }, [device]);
 
-    useEffect(() => {
-        calculateTotal();
-    }, [currentCount, discountPrice, price]);
 
-    useEffect(() => {
+
+    useEffect(()=>{
+        calculateTotal();
         updateTotalPrice(total);
-    }, [total]);
+    }, [currentCount])
 
     const calculateTotal = () => {
         let calculatedTotal = 0;
@@ -37,6 +41,7 @@ const BasketCard = ({ count, device, updateTotalPrice }) => {
             calculatedTotal = price * currentCount;
         }
         setTotal(calculatedTotal);
+
     };
 
     const handleIncrement = () => {
