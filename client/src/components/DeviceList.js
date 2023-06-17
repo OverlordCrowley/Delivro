@@ -1,13 +1,13 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import {Row} from "react-bootstrap";
 import './styles.css';
 import DeviceItem from "./DeviceItem";
+import {fetchRestaurant} from "../http/restaurantAPI";
 
 const DeviceList = observer((props) => {
     const {restaurant} = useContext(Context)
-
 
     return (
         <Row className="d-flex">

@@ -404,6 +404,29 @@ td > img{
     object-fit: cover;
 }
 
+
+.number{
+    width: 18px;
+    display: inline-block;
+}
+
+.total{
+    display: block;
+    width: 100px;
+    margin: auto;
+    text-align: center;
+}
+
+
+.btnEvent{
+    background-color: transparent;
+    color: #57AD56;
+    border: none;
+    outline: none;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .OrderBtn{
     margin-left: auto;
 }

@@ -53,6 +53,7 @@ export const createBasketCard = async ({userId, deviceId}) => {
 
     try{
         const {data} = await $authHost.post('api/basket', {userId, deviceId})
+        alert("Товар был успешно добавлен в корзину")
         return data
     }
     catch (e){
@@ -61,12 +62,22 @@ export const createBasketCard = async ({userId, deviceId}) => {
 }
 
 export const fetchBasketCards = async ({userId}) => {
-        const {data} = await $host.post('api/basket/user', {userId})
-        return data
+        try{
+            const {data} = await $host.post('api/basket/user', {userId})
+            return data
+        }
+        catch (e){
+            console.log(e)
+        }
 }
 
-export const deleteBasketCards = async ({userId, deviceId}) => {
-    const {data} = await $host.delete('api/basket/', {userId, deviceId})
+export const deleteBasketCard = async ({userId, deviceId}) => {
+    const {data} = await $host.delete('api/basket/', { data: { 'userId': userId, 'deviceId': deviceId } })
+    return data
+}
+
+export const updateBasketCard = async ({userId, deviceId, count}) => {
+    const {data} = await $host.put('api/basket/', {userId, deviceId, count})
     return data
 }
 

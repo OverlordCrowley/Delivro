@@ -12,7 +12,7 @@ const DeviceItem = observer(({cafe}) => {
     const {restaurant} = useContext(Context)
     useEffect(() => {
         fetchRestaurantTypes().then(data => restaurant.setRestaurantTypes(data))
-        fetchBasketCards(jwt_decode(localStorage.getItem('token')).id).then()
+
     }, [])
 
     return (

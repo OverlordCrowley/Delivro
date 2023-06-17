@@ -8,7 +8,7 @@ export const createRestaurant = async (type) => {
 
 export const fetchRestaurant = async (text) => {
     if(text !== ""){
-        const {data} = await $host.get('api/restaurant?name=' + text)
+            const {data} = await $host.get('api/restaurant?name=' + text )
         return data
     }
     else{
@@ -19,8 +19,13 @@ export const fetchRestaurant = async (text) => {
 
 
 export const fetchOneRestaurant = async (id) => {
-    const {data} = await $host.get('api/restaurant/' + id)
-    return data
+    try {
+        const {data} = await $host.get('api/restaurant/' + id)
+        return data
+    }
+   catch (e){
+       console.log(e)
+   }
 }
 
 

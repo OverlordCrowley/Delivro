@@ -16,11 +16,12 @@ class RestaurantController {
     }
 
     async getAll(req, res) {
-        if(req.query.name){
+        let {name} = req.query;
+        if(name){
             const restaurant = await Restaurant.findAll({
                 where: {
                     name: {
-                        [Op.like]: `%${req.query.name}%`
+                        [Op.like]: `%${name}%`
                     }
                 }
             });

@@ -40,7 +40,7 @@ class BasketController {
             }
 
 
-            const basketContents = basket.basket_devices.map((basketDevice) => {
+            const basketContents = await basket.basket_devices.map((basketDevice) => {
                 const { id, count, device } = basketDevice;
                 const { name, composition, price, weight, discount_price, img } = device;
                 return {
@@ -65,45 +65,57 @@ class BasketController {
 
     }
 
-
-
     async deleteOne(req, res, next) {
 
-        let { userId, deviceId } = req.body;
         try {
+            let { userId, deviceId } = req.body;
             const basket = await Basket.findByPk(userId, {
                 include: {
                     model: BasketDevice,
                     include: Device,
                 },
             });
-            if (!basket) {
-                return 'Корзина не найдена';
-            }
+
+            let basket1 = basket.basket_devices.map(async (basketDevice) => {
+                if (basketDevice.id === deviceId) {
+                    await BasketDevice.destroy({
+                        where: {
+                            id: basketDevice.id,
+                            basketId: basket.id,
+                        },
+                    });
+                }
+            });
+
+            return res.json([]);
+        } catch (error) {
+            next(error);
+        }
+
+    }
+
+
+
+    async updateOne(req, res, next) {
+
+        let { userId, deviceId, count } = req.body;
+
+            const basket = await Basket.findByPk(userId, {
+                include: {
+                    model: BasketDevice,
+                    include: Device,
+                },
+            });
 
 
             const basketContents = basket.basket_devices.map((basketDevice) => {
-                const { id, count, device } = basketDevice;
-                const { name, composition, price, weight, discount_price, img } = device;
-                return {
-                    id,
-                    count,
-                    device: {
-                        name,
-                        composition,
-                        price,
-                        weight,
-                        discount_price,
-                        img,
-                    },
-                };
+                if(basketDevice.id === deviceId){
+                    BasketDevice.update({ 'count': count }, { where: { id: basketDevice.id, 'basketId': basket.id } })
+                }
+
             });
 
-            return res.json(basketContents || [])
-
-        } catch (e) {
-            next(ApiError.badRequest(e.message))
-        }
+            return res.json([])
 
     }
 }

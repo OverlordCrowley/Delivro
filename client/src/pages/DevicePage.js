@@ -21,6 +21,7 @@ const DevicePage = () => {
 
 
     useEffect(() => {
+
         fetchOneRestaurant(id).then(data => {
             setRestaurant(data);
         })
@@ -49,7 +50,7 @@ const DevicePage = () => {
 
                 <section className="lending">
                     <div className="container">
-                        <img src={restaurant.img ? process.env.REACT_APP_API_URL + restaurant['img'] : ""}  className='restaurantMainImage'/>
+                        <img src={restaurant && restaurant.img ? (process.env.REACT_APP_API_URL + restaurant['img']) : ""}  className='restaurantMainImage'/>
                         <div className="row">
                             <div className="col-lg-4 col-md-7 col-xs-12">
                                 <div className="card_inn">
@@ -91,9 +92,15 @@ const DevicePage = () => {
                                            <div className="card_main" id="myBtn_1"
                                                 onClick={(e)=>{
                                                     if(user.isAuth){
-                                                        createBasketCard({'userId': jwt_decode(localStorage.getItem('token')).id, 'deviceId': el.id})
-                                                            .then((basketCard) => {
-                                                            })
+                                                        try{
+                                                            createBasketCard({'userId': jwt_decode(localStorage.getItem('token')).id, 'deviceId': el.id})
+                                                                .then((data) => {
+
+                                                                })
+                                                        }
+                                                        catch (e){
+                                                            console.log(e)
+                                                        }
 
                                                     }
                                                     else{

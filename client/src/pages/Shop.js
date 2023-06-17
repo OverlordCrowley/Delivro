@@ -28,6 +28,9 @@ const Shop = observer(() => {
         fetchRestaurant(searchText).then(data => {
             restaurant.setRestaurant(data)
         })
+            .catch(e=>{
+                console.log(e)
+            })
     }, [searchText])
 
 

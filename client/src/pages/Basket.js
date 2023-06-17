@@ -1,34 +1,42 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { Context } from '../index';
 import { observer } from 'mobx-react-lite';
 import { fetchBasketCards, fetchRestaurant, fetchTypes } from '../http/deviceAPI';
 import jwt_decode from 'jwt-decode';
 import BasketCard from '../components/basketCard/BasketCard';
+import CreateOrder from "../components/modals/CreateOrder";
 
 const Basket = observer(() => {
-    const { restaurant } = useContext(Context);
-    const { user } = useContext(Context);
     const [cards, setCard] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [orderVisible, setOrderVisible] = useState(false)
+
 
     const updateTotalPrice = (price) => {
         setTotalPrice((prevTotal) => prevTotal + Number(price));
     };
 
+    const updateTotalPriceMinus = (price) => {
+        setTotalPrice((prevTotal) => prevTotal - Number(price));
+    };
+
+
     useEffect(() => {
         fetchBasketCards({ userId: jwt_decode(localStorage.getItem('token')).id }).then((data) => {
             setCard(data);
-            const total = data.reduce((sum, el) => {
-                if (el.discount_price > el.price) {
-                    return sum + el.device.discount_price * el.count;
-                } else {
-                    return sum + el.device.price * el.count;
-                }
-            }, 0);
-            setTotalPrice(total);
         });
     }, []);
+
+    useEffect(()=>{
+            let arr = cards.reduce((sum, el) => {
+            if (el.device.discount_price < el.device.price) {
+                return sum + el.device.discount_price * el.count;
+            } else {
+                return sum + el.device.price * el.count;
+            }
+        }, 0);
+        setTotalPrice(arr);
+    }, [cards])
 
     return (
         <Container className="mt-3">
@@ -51,9 +59,12 @@ const Basket = observer(() => {
                                     {cards.map((el) => (
                                         <BasketCard
                                             key={el.id}
+                                            id={el.id}
                                             count={el.count}
                                             device={el.device}
-                                            updateTotalPrice={updateTotalPrice}
+                                            updateTotalPricePlus={updateTotalPrice}
+                                            updateTotalPriceMinus={updateTotalPriceMinus}
+                                            devicePrice={el.device.price > el.device.discount_price ? el.count * el.device.discount_price : el.count * el.device.price}
                                         />
                                     ))}
                                     </tbody>
@@ -61,7 +72,9 @@ const Basket = observer(() => {
 
                                 <p className="TotalPrice">Итоговая цена: {totalPrice}</p>
                                 <br />
-                                <button className="headerMap green OrderBtn" onClick={(e) => {}}>
+                                <button className="headerMap green OrderBtn" onClick={(e) => {
+                                    setOrderVisible(true)
+                                }}>
                                     Перейти к оформлению
                                 </button>
                             </>
@@ -71,6 +84,7 @@ const Basket = observer(() => {
                     </div>
                 </div>
             </nav>
+            <CreateOrder show={orderVisible} onHide={() => setOrderVisible(false)}/>
         </Container>
     );
 });
