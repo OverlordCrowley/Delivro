@@ -28,6 +28,10 @@ export const fetchOneRestaurant = async (id) => {
    }
 }
 
+export const createOrder = async ({phone, userId}) => {
+    const {data} = await $authHost.post('api/order', {phone, userId})
+    return data
+}
 
 
 

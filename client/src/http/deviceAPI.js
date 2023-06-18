@@ -81,4 +81,14 @@ export const updateBasketCard = async ({userId, deviceId, count}) => {
     return data
 }
 
+export const changeOrder = async ({orderId}) => {
+    const {data} = await $host.post('api/order/update', {orderId})
+    return data
+}
+
+export const fetchOrder = async () => {
+    const {data} = await $host.get('api/order/getAll')
+    return data
+}
+
 

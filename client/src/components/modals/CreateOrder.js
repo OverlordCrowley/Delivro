@@ -1,17 +1,21 @@
 import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
-import {createDevice, createType} from "../../http/deviceAPI";
-import {createRestaurant} from "../../http/restaurantAPI";
+import {createOrder} from "../../http/restaurantAPI";
+import InputMask from 'react-input-mask';
+import jwt_decode from "jwt-decode";
 
-const CreateRestaurant = ({show, onHide}) => {
+const CreateOrder = ({show, onHide}) => {
     const [value, setValue] = useState('')
 
 
-    const addRestaurant = () => {
-        const formData = new FormData()
-        formData.append('name', value)
-        createRestaurant(formData).then(data => onHide())
+    const addOrder = () => {
+        createOrder({'phone': value, userId: jwt_decode(localStorage.getItem('token')).id }).then((data) => {
+            alert('Заказ успешно оформлен')
+        })
+            .catch(err=>{
+                alert('Оформление заказа невозможно')
+            });
     }
 
 
@@ -23,25 +27,26 @@ const CreateRestaurant = ({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Добавить ресторан
+                    Оформление заказа
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Control
+                    <InputMask
+                        mask='(+7) (999)-999-9999'
                         value={value}
                         onChange={e => setValue(e.target.value)}
-                        placeholder={"Введите название ресторана"}
+                        placeholder={"Введите ваш номер телефона"}
                     />
 
                 </Form>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
-                <Button variant="outline-success" onClick={addRestaurant}>Добавить</Button>
+                <Button variant="outline-success" onClick={addOrder}>Оформить заказ</Button>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default CreateRestaurant;
+export default CreateOrder;

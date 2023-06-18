@@ -29,20 +29,28 @@ const DevicePage = () => {
         fetchRestaurantAllTypesById(id).then(data => setAllFoodTypes(data))
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         let arr = [];
 
         for (let allFoodTypesKey in allFoodTypes) {
-            if(!arr.includes(allFoodTypes[allFoodTypesKey].foodType.name)){
-                arr.push({name: allFoodTypes[allFoodTypesKey].foodType.name,
-                    id: allFoodTypes[allFoodTypesKey].foodType.id
+            const foodTypeName = allFoodTypes[allFoodTypesKey]?.foodType?.name;
+            const foodTypeId = allFoodTypes[allFoodTypesKey]?.foodType?.id;
+
+            if (foodTypeName && !arr.some(item => item.name === foodTypeName)) {
+                arr.push({
+                    name: foodTypeName,
+                    id: foodTypeId
                 });
             }
         }
-        setHeader(arr)
-        setSelectedType([...arr][0])
 
-    }, [allFoodTypes])
+        setHeader(arr);
+
+        if (arr.length > 0) {
+            setSelectedType(arr[0]);
+        }
+    }, [allFoodTypes]);
+
 
 
     return (
@@ -83,11 +91,13 @@ const DevicePage = () => {
 
                 <main className="main_list">
                     <div className="container">
+                        <h2 className="main_title">{selectedType ? selectedType.name : ''}</h2>
+                        <div className="row">
                         {allFoodTypes ? allFoodTypes.map(el=>(
                             el && selectedType && el.foodType.id === selectedType.id ?
                                <>
-                                   <h2 className="main_title">{selectedType ? selectedType.name : ''}</h2>
-                                   <div className="row">
+
+
                                        <div className="col-lg-6 col-md-12 col-xs-12" >
                                            <div className="card_main" id="myBtn_1"
                                                 onClick={(e)=>{
@@ -130,12 +140,12 @@ const DevicePage = () => {
 
                                        </div>
 
-                                   </div>
+
                            </>
                                : ''
                         )) : ''}
 
-
+                        </div>
                     </div>
                 </main>
 

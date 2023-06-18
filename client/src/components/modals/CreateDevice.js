@@ -17,8 +17,14 @@ const CreateDevice = observer(({show, onHide}) => {
     const [restauran, setResrauran] = useState(null)
 
     useEffect(() => {
-        fetchTypes().then(data => restaurant.setTypes(data))
-        fetchRestaurant().then(data => restaurant.setRestaurant(data))
+        fetchTypes().then(data => {
+            restaurant.setTypes(data)
+            setType(data[0].id)
+        })
+        fetchRestaurant().then(data => {
+            restaurant.setRestaurant(data)
+            setResrauran(data[0].id)
+        })
     }, [])
 
 

@@ -53,7 +53,7 @@ const Email = sequelize.define('email', {
 
 const Order = sequelize.define('order', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    phone: { type: DataTypes.STRING, allowNull: false },
+    phone: { type: DataTypes.STRING,unique: true, allowNull: false },
 });
 
 // Определение связей после определения всех моделей
@@ -75,7 +75,7 @@ BasketDevice.belongsTo(Device);
 Restaurant.hasMany(RestaurantType);
 RestaurantType.belongsTo(Restaurant);
 
-BasketDevice.hasMany(Order);
+Basket.hasOne(Order);
 
 module.exports = {
     User,

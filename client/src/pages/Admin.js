@@ -4,12 +4,14 @@ import CreateRestaurant from "../components/modals/CreateRestaurant";
 import CreateDevice from "../components/modals/CreateDevice";
 import CreateType from "../components/modals/CreateType";
 import CreateRestaurantType from "../components/modals/CreateRestaurantType";
+import ChangeOrderState from "../components/modals/ChangeOrderState";
 
 const Admin = () => {
     const [restaurantVisible, setRestaurantVisible] = useState(false)
     const [typeVisible, setTypeVisible] = useState(false)
     const [restaurantTypeVisible, setRestaurantTypeVisible] = useState(false)
     const [deviceVisible, setDeviceVisible] = useState(false)
+    const [orderStateVisible, setOrderStateVisible] = useState(false)
 
     return (
         <Container className="d-flex flex-column">
@@ -41,12 +43,19 @@ const Admin = () => {
             >
                 Добавить тип ресторана
             </Button>
-
+            <Button
+                variant={"outline-dark"}
+                className="mt-4 p-2"
+                onClick={() => setOrderStateVisible(true)}
+            >
+                Изменить состояние заказа
+            </Button>
 
             <CreateRestaurant show={restaurantVisible} onHide={() => setRestaurantVisible(false)}/>
             <CreateDevice show={deviceVisible} onHide={() => setDeviceVisible(false)}/>
             <CreateType show={typeVisible} onHide={() => setTypeVisible(false)}/>
             <CreateRestaurantType show={restaurantTypeVisible} onHide={() => setRestaurantTypeVisible(false)}/>
+            <ChangeOrderState show={orderStateVisible} onHide={() => setOrderStateVisible(false)}/>
         </Container>
     );
 };
