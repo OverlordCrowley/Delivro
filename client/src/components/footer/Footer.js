@@ -1,15 +1,16 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Context} from "../../index";
 import '../styles.css';
 import {observer} from "mobx-react-lite";
 import {Link, useHistory} from 'react-router-dom';
-import planet  from './location.svg';
 import vk  from '../../assets/img/vk.svg';
 import github  from '../../assets/img/github.svg';
 import tg  from '../../assets/img/telegram.svg';
 import ap  from '../../assets/img/app_store.svg';
 import gp  from '../../assets/img/google_play.svg';
 import arrow  from '../../assets/img/arrow.svg';
+import CreateEmail from "../modals/CreateEmail";
+import ChangeOrderState from "../modals/ChangeOrderState";
 
 const Footer = observer(() => {
     const {user} = useContext(Context)
@@ -22,6 +23,8 @@ const Footer = observer(() => {
             behavior: 'smooth',
         });
     };
+
+    const [emailVisible, setEmailVisible] = useState(false)
 
     return (
         <footer className="footer">
@@ -62,8 +65,8 @@ const Footer = observer(() => {
                         <div className="col-lg-4 col-md-4 col-xs-12">
                             <div className="center_content">
                                 <p><a href="#">Об UserEats</a></p>
-                                <p><a href="#">Станьте партнёром по доставке</a></p>
-                                <p><a href="#">Станьте парнёром-рестораном</a></p>
+                                <p><a href="#" onClick={() => setEmailVisible(true)}>Станьте партнёром по доставке</a></p>
+                                <p><a href="#" onClick={() => setEmailVisible(true)}>Станьте партнёром-рестораном</a></p>
                             </div>
                         </div>
 
@@ -95,6 +98,8 @@ const Footer = observer(() => {
                                 <p><a href="#">Пользовательское соглашение</a></p>
                             </div>
             </div>
+
+            <CreateEmail show={emailVisible} onHide={() => setEmailVisible(false)}/>
         </footer>
 
     );

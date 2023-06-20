@@ -17,16 +17,21 @@ const ChangeOrderState = ({show, onHide}) => {
     const [value, setValue] = useState('')
     const [order, setOrder] = useState('')
     let [custom, setCustom] = useState([]);
+    let [curOrder, setCurOrder] = useState({});
 
     useEffect(() => {
         fetchOrder().then(data => {
             setCustom(data)
             console.log(data)
+            if(data.length > 0){
+
+                setOrder(data[0]['id'])
+            }
         })
     }, [])
 
-    const changeRestaurantType = () => {
-        changeOrder({'name': value, 'restaurantId': order}).then(data => {
+    const changeOrderState = () => {
+        changeOrder({'orderId': order, 'text': curOrder}).then(data => {
             setValue('')
             onHide()
         })
@@ -37,7 +42,7 @@ const ChangeOrderState = ({show, onHide}) => {
     }
 
     function changeUserStatus(e) {
-        setValue(e.target.value);
+        setCurOrder(e.target.value);
     }
 
     return (
@@ -53,7 +58,7 @@ const ChangeOrderState = ({show, onHide}) => {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <select className="lang lang-b" value={value} onChange={changeUserStatus}>
+                    <select className="lang lang-b" value={curOrder} onChange={changeUserStatus}>
                             <option
                                 value='Не обработан'>
                                 Не обработан
@@ -68,12 +73,12 @@ const ChangeOrderState = ({show, onHide}) => {
                         </option>
                     </select>
 
-                    <select className="lang lang-b" value={order} onChange={changeUserBasket}>
-                        {custom.map(restaurants =>
+                    <select className="lang lang-b" value={order.id} onChange={changeUserBasket}>
+                        {custom.map(order =>
                             <option
-                                value={restaurants.id}
-                                key={restaurants.id}>
-                                {restaurants.name}
+                                value={order.id}
+                                key={order.id}>
+                                {order.phone}
                             </option>
                         )}
                     </select>
@@ -81,7 +86,7 @@ const ChangeOrderState = ({show, onHide}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
-                <Button variant="outline-success" onClick={changeRestaurantType}>Изменить</Button>
+                <Button variant="outline-success" onClick={changeOrderState}>Изменить</Button>
             </Modal.Footer>
         </Modal>
     );

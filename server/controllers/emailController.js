@@ -5,32 +5,36 @@ const directTransport = require('nodemailer-direct-transport');
 
 class EmailController {
     async create(req, res, next) {
-        let {email, message} = req.body
-        const mail = await Email.create({'email': email, 'message': message});
+        let { email, message } = req.body;
 
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'delivrodelivro87@gmail.com',
-                pass: 'fghfgh45h5HEHeh90imweh@',
-            },
-        });
+        try {
 
-        let result = await transporter.sendMail({
-            from: 'delivrodelivro87@gmail.com',
-            to: 'email',
-            subject: 'Письмо о сотрудничестве',
-            text: 'Письмо о сотрудничестве',
-            html:
-                '<p>Здравствуйте, наш менеджер в скором времени свяжется с вами</p>',
-        });
+            const mail = await Email.create({ email, message });
 
+            console.log(email, message)
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'jagerduque@gmail.com',
+                    pass: 'sgtgunmakuzrjsxe',
+                },
+            });
 
+            let result = await transporter.sendMail({
+                from: 'jagerduque@gmail.com',
+                to: email,
+                subject: 'Письмо о сотрудничестве',
+                text: 'Письмо о сотрудничестве',
+                html: '<p>Здравствуйте, наш менеджер в скором времени свяжется с вами</p>',
+            });
 
-        return(mail || []);
+            console.log('Письмо успешно отправлено');
 
-
-
+            return res.json(mail || []);
+        } catch (error) {
+            console.error('Ошибка при создании письма', error);
+            next(error);
+        }
     }
 
 

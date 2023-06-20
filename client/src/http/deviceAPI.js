@@ -81,14 +81,24 @@ export const updateBasketCard = async ({userId, deviceId, count}) => {
     return data
 }
 
-export const changeOrder = async ({orderId}) => {
-    const {data} = await $host.post('api/order/update', {orderId})
+export const changeOrder = async ({orderId, text}) => {
+    const {data} = await $host.post('api/order/update', {orderId, text})
     return data
 }
 
 export const fetchOrder = async () => {
-    const {data} = await $host.get('api/order/getAll')
+    const {data} = await $host.get('api/order/')
     return data
+}
+
+export const addEmail = async ({email, message}) => {
+   try {
+       const {data} = await $host.post('api/email/', {email, message})
+       return data
+   }
+   catch (e){
+       alert('Невозможно обратиться')
+   }
 }
 
 

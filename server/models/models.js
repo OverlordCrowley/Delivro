@@ -14,8 +14,7 @@ const Basket = sequelize.define('basket', {
 
 const BasketDevice = sequelize.define('basket_device', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    count: { type: DataTypes.INTEGER, default: 1, allowNull: false },
-    finished: { type: DataTypes.INTEGER, default: 0, allowNull: true },
+    count: { type: DataTypes.INTEGER, default: 1, allowNull: false }
 });
 
 const Device = sequelize.define('device', {
@@ -54,6 +53,8 @@ const Email = sequelize.define('email', {
 const Order = sequelize.define('order', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     phone: { type: DataTypes.STRING,unique: true, allowNull: false },
+    finished: { type: DataTypes.INTEGER, default: 0, allowNull: true },
+    basketId: { type: DataTypes.INTEGER, unique: true },
 });
 
 // Определение связей после определения всех моделей
@@ -76,6 +77,7 @@ Restaurant.hasMany(RestaurantType);
 RestaurantType.belongsTo(Restaurant);
 
 Basket.hasOne(Order);
+
 
 module.exports = {
     User,
